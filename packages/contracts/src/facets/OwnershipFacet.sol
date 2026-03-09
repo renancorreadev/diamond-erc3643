@@ -40,14 +40,14 @@ contract OwnershipFacet {
     function transferOwnership(address _newOwner) external {
         LibDiamond.enforceIsContractOwner();
         if (_newOwner == address(0)) revert OwnershipFacet__ZeroAddress();
-        AppStorage storage s = LibAppStorage.diamondStorage();
+        AppStorage storage s = LibAppStorage.layout();
         s.pendingOwner = _newOwner;
         emit OwnershipTransferStarted(LibDiamond.contractOwner(), _newOwner);
     }
 
     /// @notice Accepts the ownership nomination. Must be called by the pending owner.
     function acceptOwnership() external {
-        AppStorage storage s = LibAppStorage.diamondStorage();
+        AppStorage storage s = LibAppStorage.layout();
         if (msg.sender != s.pendingOwner) revert OwnershipFacet__NotPendingOwner();
         address previousOwner = LibDiamond.contractOwner();
         LibDiamond.setContractOwner(msg.sender);
@@ -66,6 +66,6 @@ contract OwnershipFacet {
 
     /// @notice Returns the pending owner (awaiting acceptance)
     function pendingOwner() external view returns (address) {
-        return LibAppStorage.diamondStorage().pendingOwner;
+        return LibAppStorage.layout().pendingOwner;
     }
 }
