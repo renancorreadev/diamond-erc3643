@@ -11,7 +11,8 @@ struct AssetConfig {
     string name;
     string symbol;
     string uri;
-    uint256 supplyCap;         // 0 = no cap
+    uint256 supplyCap;         // 0 = unlimited
+    uint256 totalSupply;       // current minted supply for this tokenId
     uint32 identityProfileId;  // → LibIdentityStorage.profiles[id]
     address complianceModule;  // → IComplianceModule
     address issuer;            // authorised minter for this asset

@@ -10,6 +10,7 @@ import {AccessControlFacet} from "../../src/facets/security/AccessControlFacet.s
 import {PauseFacet} from "../../src/facets/security/PauseFacet.sol";
 import {EmergencyFacet} from "../../src/facets/security/EmergencyFacet.sol";
 import {FreezeFacet} from "../../src/facets/rwa/FreezeFacet.sol";
+import {AssetManagerFacet} from "../../src/facets/token/AssetManagerFacet.sol";
 import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 import {DiamondInit} from "../../src/initializers/DiamondInit.sol";
 
@@ -23,6 +24,7 @@ contract DiamondHelper is Test {
         PauseFacet pauseFacet;
         EmergencyFacet emergencyFacet;
         FreezeFacet freezeFacet;
+        AssetManagerFacet assetManagerFacet;
     }
 
     function deployDiamond(address owner) internal returns (DeployedDiamond memory d) {
@@ -33,11 +35,12 @@ contract DiamondHelper is Test {
         d.pauseFacet = new PauseFacet();
         d.emergencyFacet = new EmergencyFacet();
         d.freezeFacet = new FreezeFacet();
+        d.assetManagerFacet = new AssetManagerFacet();
         DiamondInit diamondInit = new DiamondInit();
 
         d.diamond = new Diamond(owner, address(d.cutFacet));
 
-        IDiamond.FacetCut[] memory cuts = new IDiamond.FacetCut[](6);
+        IDiamond.FacetCut[] memory cuts = new IDiamond.FacetCut[](7);
 
         cuts[0] = IDiamond.FacetCut({
             facetAddress: address(d.loupeFacet),
@@ -68,6 +71,11 @@ contract DiamondHelper is Test {
             facetAddress: address(d.freezeFacet),
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: _freezeSelectors()
+        });
+        cuts[6] = IDiamond.FacetCut({
+            facetAddress: address(d.assetManagerFacet),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _assetManagerSelectors()
         });
 
         vm.prank(owner);
@@ -133,5 +141,19 @@ contract DiamondHelper is Test {
         sels[5] = FreezeFacet.isAssetWalletFrozen.selector;
         sels[6] = FreezeFacet.getFrozenAmount.selector;
         sels[7] = FreezeFacet.getLockupExpiry.selector;
+    }
+
+    function _assetManagerSelectors() internal pure returns (bytes4[] memory sels) {
+        sels = new bytes4[](10);
+        sels[0] = AssetManagerFacet.registerAsset.selector;
+        sels[1] = AssetManagerFacet.setComplianceModule.selector;
+        sels[2] = AssetManagerFacet.setIdentityProfile.selector;
+        sels[3] = AssetManagerFacet.setIssuer.selector;
+        sels[4] = AssetManagerFacet.setSupplyCap.selector;
+        sels[5] = AssetManagerFacet.setAllowedCountries.selector;
+        sels[6] = AssetManagerFacet.setAssetUri.selector;
+        sels[7] = AssetManagerFacet.getAssetConfig.selector;
+        sels[8] = AssetManagerFacet.getRegisteredTokenIds.selector;
+        sels[9] = AssetManagerFacet.assetExists.selector;
     }
 }
