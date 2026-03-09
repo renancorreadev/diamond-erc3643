@@ -11,6 +11,9 @@ import {PauseFacet} from "../../src/facets/security/PauseFacet.sol";
 import {EmergencyFacet} from "../../src/facets/security/EmergencyFacet.sol";
 import {FreezeFacet} from "../../src/facets/rwa/FreezeFacet.sol";
 import {AssetManagerFacet} from "../../src/facets/token/AssetManagerFacet.sol";
+import {ClaimTopicsFacet} from "../../src/facets/identity/ClaimTopicsFacet.sol";
+import {TrustedIssuerFacet} from "../../src/facets/identity/TrustedIssuerFacet.sol";
+import {IdentityRegistryFacet} from "../../src/facets/identity/IdentityRegistryFacet.sol";
 import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 import {DiamondInit} from "../../src/initializers/DiamondInit.sol";
 
@@ -25,6 +28,9 @@ contract DiamondHelper is Test {
         EmergencyFacet emergencyFacet;
         FreezeFacet freezeFacet;
         AssetManagerFacet assetManagerFacet;
+        ClaimTopicsFacet claimTopicsFacet;
+        TrustedIssuerFacet trustedIssuerFacet;
+        IdentityRegistryFacet identityRegistryFacet;
     }
 
     function deployDiamond(address owner) internal returns (DeployedDiamond memory d) {
@@ -36,11 +42,14 @@ contract DiamondHelper is Test {
         d.emergencyFacet = new EmergencyFacet();
         d.freezeFacet = new FreezeFacet();
         d.assetManagerFacet = new AssetManagerFacet();
+        d.claimTopicsFacet = new ClaimTopicsFacet();
+        d.trustedIssuerFacet = new TrustedIssuerFacet();
+        d.identityRegistryFacet = new IdentityRegistryFacet();
         DiamondInit diamondInit = new DiamondInit();
 
         d.diamond = new Diamond(owner, address(d.cutFacet));
 
-        IDiamond.FacetCut[] memory cuts = new IDiamond.FacetCut[](7);
+        IDiamond.FacetCut[] memory cuts = new IDiamond.FacetCut[](10);
 
         cuts[0] = IDiamond.FacetCut({
             facetAddress: address(d.loupeFacet),
@@ -76,6 +85,21 @@ contract DiamondHelper is Test {
             facetAddress: address(d.assetManagerFacet),
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: _assetManagerSelectors()
+        });
+        cuts[7] = IDiamond.FacetCut({
+            facetAddress: address(d.claimTopicsFacet),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _claimTopicsSelectors()
+        });
+        cuts[8] = IDiamond.FacetCut({
+            facetAddress: address(d.trustedIssuerFacet),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _trustedIssuerSelectors()
+        });
+        cuts[9] = IDiamond.FacetCut({
+            facetAddress: address(d.identityRegistryFacet),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _identityRegistrySelectors()
         });
 
         vm.prank(owner);
@@ -155,5 +179,34 @@ contract DiamondHelper is Test {
         sels[7] = AssetManagerFacet.getAssetConfig.selector;
         sels[8] = AssetManagerFacet.getRegisteredTokenIds.selector;
         sels[9] = AssetManagerFacet.assetExists.selector;
+    }
+
+    function _claimTopicsSelectors() internal pure returns (bytes4[] memory sels) {
+        sels = new bytes4[](5);
+        sels[0] = ClaimTopicsFacet.createProfile.selector;
+        sels[1] = ClaimTopicsFacet.setProfileClaimTopics.selector;
+        sels[2] = ClaimTopicsFacet.getProfileClaimTopics.selector;
+        sels[3] = ClaimTopicsFacet.getProfileVersion.selector;
+        sels[4] = ClaimTopicsFacet.profileExists.selector;
+    }
+
+    function _trustedIssuerSelectors() internal pure returns (bytes4[] memory sels) {
+        sels = new bytes4[](3);
+        sels[0] = TrustedIssuerFacet.addTrustedIssuer.selector;
+        sels[1] = TrustedIssuerFacet.removeTrustedIssuer.selector;
+        sels[2] = TrustedIssuerFacet.isTrustedIssuer.selector;
+    }
+
+    function _identityRegistrySelectors() internal pure returns (bytes4[] memory sels) {
+        sels = new bytes4[](9);
+        sels[0] = IdentityRegistryFacet.registerIdentity.selector;
+        sels[1] = IdentityRegistryFacet.deleteIdentity.selector;
+        sels[2] = IdentityRegistryFacet.updateIdentity.selector;
+        sels[3] = IdentityRegistryFacet.updateCountry.selector;
+        sels[4] = IdentityRegistryFacet.batchRegisterIdentity.selector;
+        sels[5] = IdentityRegistryFacet.isVerified.selector;
+        sels[6] = IdentityRegistryFacet.getIdentity.selector;
+        sels[7] = IdentityRegistryFacet.getCountry.selector;
+        sels[8] = IdentityRegistryFacet.contains.selector;
     }
 }
