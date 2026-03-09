@@ -7,7 +7,7 @@ import {DiamondCutFacet} from "../../src/facets/DiamondCutFacet.sol";
 import {DiamondLoupeFacet} from "../../src/facets/DiamondLoupeFacet.sol";
 import {OwnershipFacet} from "../../src/facets/OwnershipFacet.sol";
 import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/IDiamond.sol";
-import {DiamondInit} from "./DiamondInit.sol";
+import {DiamondInit} from "../../src/initializers/DiamondInit.sol";
 
 contract DiamondHelper is Test {
     struct DeployedDiamond {
