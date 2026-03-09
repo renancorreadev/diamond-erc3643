@@ -3,7 +3,7 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 import {DiamondHelper} from "../helpers/DiamondHelper.sol";
-import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/IDiamond.sol";
+import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 // solhint-disable-next-line import-path-check
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
@@ -23,7 +23,7 @@ contract DiamondLoupeTest is DiamondHelper {
 
     function test_FacetAddressesLength() public view {
         address[] memory addrs = loupe.facetAddresses();
-        assertEq(addrs.length, 3); // cut + loupe + ownership
+        assertEq(addrs.length, 7); // cut + loupe + ownership + accessControl + pause + emergency + freeze
     }
 
     function test_FacetAddressesContainsCutFacet() public view {
@@ -96,7 +96,7 @@ contract DiamondLoupeTest is DiamondHelper {
 
     function test_FacetsReturnsCorrectLength() public view {
         IDiamondLoupe.Facet[] memory fs = loupe.facets();
-        assertEq(fs.length, 3);
+        assertEq(fs.length, 7);
     }
 
     function test_FacetsSelectorsNonEmpty() public view {

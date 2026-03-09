@@ -24,10 +24,9 @@ struct IdentityStorage {
     mapping(uint32 => IdentityProfile) profiles;
     /// wallet → profileId → cached verification result
     mapping(address => mapping(uint32 => bool)) verifiedCache;
-    /// wallet → profileId → identity version at cache time
-    mapping(address => mapping(uint32 => uint64)) cacheIdentityVersion;
-    /// wallet → profileId → profile version at cache time
-    mapping(address => mapping(uint32 => uint64)) cacheProfileVersion;
+    /// wallet → profileId → combined version at cache time
+    ///          invalidated when identityVersion[wallet] or profiles[profileId].version changes
+    mapping(address => mapping(uint32 => uint64)) cacheVersion;
     uint32 profileCount;
 }
 

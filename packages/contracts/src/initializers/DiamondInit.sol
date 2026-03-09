@@ -2,7 +2,7 @@
 pragma solidity 0.8.28;
 
 import {LibDiamond, DiamondStorage} from "../libraries/LibDiamond.sol";
-import {IDiamondCut, IDiamondLoupe} from "../interfaces/IDiamond.sol";
+import {IDiamondCut, IDiamondLoupe} from "../interfaces/core/IDiamond.sol";
 // solhint-disable-next-line import-path-check
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 

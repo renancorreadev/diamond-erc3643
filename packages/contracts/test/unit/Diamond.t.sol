@@ -4,9 +4,9 @@ pragma solidity 0.8.28;
 import {Test} from "forge-std/Test.sol";
 import {DiamondHelper} from "../helpers/DiamondHelper.sol";
 import {Diamond} from "../../src/Diamond.sol";
-import {DiamondCutFacet} from "../../src/facets/DiamondCutFacet.sol";
-import {DiamondLoupeFacet} from "../../src/facets/DiamondLoupeFacet.sol";
-import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/IDiamond.sol";
+import {DiamondCutFacet} from "../../src/facets/core/DiamondCutFacet.sol";
+import {DiamondLoupeFacet} from "../../src/facets/core/DiamondLoupeFacet.sol";
+import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 
 contract DiamondTest is DiamondHelper {
     DeployedDiamond internal d;
@@ -40,7 +40,7 @@ contract DiamondTest is DiamondHelper {
 
     function test_FacetAddressesReturnsThreeFacets() public view {
         address[] memory addrs = IDiamondLoupe(address(d.diamond)).facetAddresses();
-        assertEq(addrs.length, 3);
+        assertEq(addrs.length, 7); // cut + loupe + ownership + accessControl + pause + emergency + freeze
     }
 
     /*//////////////////////////////////////////////////////////////

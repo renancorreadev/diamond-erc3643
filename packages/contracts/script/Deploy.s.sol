@@ -5,10 +5,10 @@ import {Script, console2} from "forge-std/Script.sol";
 
 import {Diamond} from "../src/Diamond.sol";
 import {DiamondInit} from "../src/initializers/DiamondInit.sol";
-import {DiamondCutFacet} from "../src/facets/DiamondCutFacet.sol";
-import {DiamondLoupeFacet} from "../src/facets/DiamondLoupeFacet.sol";
-import {OwnershipFacet} from "../src/facets/OwnershipFacet.sol";
-import {IDiamond, IDiamondCut, IDiamondLoupe} from "../src/interfaces/IDiamond.sol";
+import {DiamondCutFacet} from "../src/facets/core/DiamondCutFacet.sol";
+import {DiamondLoupeFacet} from "../src/facets/core/DiamondLoupeFacet.sol";
+import {OwnershipFacet} from "../src/facets/core/OwnershipFacet.sol";
+import {IDiamond, IDiamondCut, IDiamondLoupe} from "../src/interfaces/core/IDiamond.sol";
 // solhint-disable-next-line import-path-check
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
