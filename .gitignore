@@ -1,0 +1,55 @@
+# ──────────────────────────────────────────────
+# AI / Claude — nunca subir
+# ──────────────────────────────────────────────
+CLAUDE.md
+.claude/
+.cursorrules
+.cursorignore
+.aider*
+copilot-instructions.md
+.github/copilot-instructions.md
+
+# ──────────────────────────────────────────────
+# Foundry / Solidity
+# ──────────────────────────────────────────────
+cache/
+out/
+broadcast/
+artifacts/
+typechain-types/
+lcov.info
+coverage/
+
+# ──────────────────────────────────────────────
+# Node / pnpm
+# ──────────────────────────────────────────────
+node_modules/
+.pnpm-store/
+dist/
+.turbo/
+.next/
+.vercel/
+*.tsbuildinfo
+
+# ──────────────────────────────────────────────
+# Env / secrets — NUNCA commitar
+# ──────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+keystore/
+
+# ──────────────────────────────────────────────
+# OS
+# ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ──────────────────────────────────────────────
+# Editor
+# ──────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,26 @@
+{
+  "name": "diamond-erc3643",
+  "private": true,
+  "description": "ERC-3643 Security Token with Diamond Proxy and ERC-1155 for RWA",
+  "version": "0.0.0",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.26.1",
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev --parallel",
+    "contracts:build": "pnpm --filter @diamond-erc3643/contracts build",
+    "contracts:test": "pnpm --filter @diamond-erc3643/contracts test",
+    "contracts:lint": "pnpm --filter @diamond-erc3643/contracts lint",
+    "contracts:fmt": "pnpm --filter @diamond-erc3643/contracts fmt"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4",
+    "@changesets/cli": "^2.29.4"
+  }
+}

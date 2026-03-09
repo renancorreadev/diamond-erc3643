@@ -1,0 +1,22 @@
+{
+  "name": "@diamond-erc3643/contracts",
+  "version": "0.1.0",
+  "description": "ERC-3643 + Diamond Proxy + ERC-1155 smart contracts",
+  "private": true,
+  "scripts": {
+    "build": "forge build --sizes",
+    "test": "forge test -vvv",
+    "test:fuzz": "forge test --match-path 'test/fuzz/**' --fuzz-runs 10000",
+    "test:invariant": "forge test --match-path 'test/invariant/**' --fuzz-runs 10000",
+    "lint": "solhint 'src/**/*.sol'",
+    "lint:fix": "solhint 'src/**/*.sol' --fix",
+    "coverage": "forge coverage --report lcov",
+    "slither": "slither . --config-file slither.config.json",
+    "clean": "forge clean",
+    "fmt": "forge fmt",
+    "fmt:check": "forge fmt --check"
+  },
+  "devDependencies": {
+    "solhint": "^5.0.5"
+  }
+}

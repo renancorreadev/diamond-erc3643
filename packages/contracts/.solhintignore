@@ -1,0 +1,6 @@
+lib/
+out/
+cache/
+# Libraries internas do Diamond usam assembly e ordering não-padrão propositalmente
+src/libraries/LibDiamond.sol
+src/libraries/LibAppStorage.sol

@@ -1,0 +1,14 @@
+#!/bin/sh
+# Bloqueia arquivos relacionados a IA / Claude
+
+BLOCKED="CLAUDE.md .claude/ .cursorrules .aider copilot-instructions.md"
+
+for pattern in $BLOCKED; do
+  if git diff --cached --name-only | grep -q "$pattern"; then
+    echo "❌ COMMIT BLOQUEADO: arquivo de IA detectado ($pattern)"
+    echo "   Remova do stage: git reset HEAD $pattern"
+    exit 1
+  fi
+done
+
+exit 0
