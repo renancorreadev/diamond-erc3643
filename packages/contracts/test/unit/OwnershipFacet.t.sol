@@ -3,7 +3,7 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 import {DiamondHelper} from "../helpers/DiamondHelper.sol";
-import {IDiamondLoupe} from "../../src/interfaces/IDiamond.sol";
+import {IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 
 interface IOwnership {
     function owner() external view returns (address);

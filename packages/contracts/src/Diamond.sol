@@ -2,7 +2,7 @@
 pragma solidity 0.8.28;
 
 import {LibDiamond} from "./libraries/LibDiamond.sol";
-import {IDiamond, IDiamondCut} from "./interfaces/IDiamond.sol";
+import {IDiamond, IDiamondCut} from "./interfaces/core/IDiamond.sol";
 
 /*//////////////////////////////////////////////////////////////
                             ERRORS

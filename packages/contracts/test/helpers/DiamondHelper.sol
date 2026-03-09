@@ -3,14 +3,14 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 import {Diamond} from "../../src/Diamond.sol";
-import {DiamondCutFacet} from "../../src/facets/DiamondCutFacet.sol";
-import {DiamondLoupeFacet} from "../../src/facets/DiamondLoupeFacet.sol";
-import {OwnershipFacet} from "../../src/facets/OwnershipFacet.sol";
-import {AccessControlFacet} from "../../src/facets/AccessControlFacet.sol";
-import {PauseFacet} from "../../src/facets/PauseFacet.sol";
-import {EmergencyFacet} from "../../src/facets/EmergencyFacet.sol";
-import {FreezeFacet} from "../../src/facets/FreezeFacet.sol";
-import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/IDiamond.sol";
+import {DiamondCutFacet} from "../../src/facets/core/DiamondCutFacet.sol";
+import {DiamondLoupeFacet} from "../../src/facets/core/DiamondLoupeFacet.sol";
+import {OwnershipFacet} from "../../src/facets/core/OwnershipFacet.sol";
+import {AccessControlFacet} from "../../src/facets/security/AccessControlFacet.sol";
+import {PauseFacet} from "../../src/facets/security/PauseFacet.sol";
+import {EmergencyFacet} from "../../src/facets/security/EmergencyFacet.sol";
+import {FreezeFacet} from "../../src/facets/rwa/FreezeFacet.sol";
+import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 import {DiamondInit} from "../../src/initializers/DiamondInit.sol";
 
 contract DiamondHelper is Test {

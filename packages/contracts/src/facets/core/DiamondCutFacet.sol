@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {IDiamondCut} from "../interfaces/IDiamond.sol";
-import {LibDiamond} from "../libraries/LibDiamond.sol";
+import {IDiamondCut} from "../../interfaces/core/IDiamond.sol";
+import {LibDiamond} from "../../libraries/LibDiamond.sol";
 
 /// @title DiamondCutFacet
 /// @author Renan Correa <renan.correa@hubweb3.com>

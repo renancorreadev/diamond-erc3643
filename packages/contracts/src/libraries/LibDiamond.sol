@@ -4,7 +4,7 @@ pragma solidity 0.8.28;
 // solhint-disable no-inline-assembly
 // solhint-disable avoid-low-level-calls
 
-import {IDiamond} from "../interfaces/IDiamond.sol";
+import {IDiamond} from "../interfaces/core/IDiamond.sol";
 
 /*//////////////////////////////////////////////////////////////
                         STORAGE STRUCTS

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {LibDiamond} from "../libraries/LibDiamond.sol";
-import {LibAccessStorage, AccessStorage} from "../storage/LibAccessStorage.sol";
+import {LibDiamond} from "../../libraries/LibDiamond.sol";
+import {LibAccessStorage, AccessStorage} from "../../storage/LibAccessStorage.sol";
 
 /*//////////////////////////////////////////////////////////////
                             ERRORS
