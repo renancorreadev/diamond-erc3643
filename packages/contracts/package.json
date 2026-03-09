@@ -5,16 +5,33 @@
   "private": true,
   "scripts": {
     "build": "forge build --sizes",
-    "test": "forge test -vvv",
-    "test:fuzz": "forge test --match-path 'test/fuzz/**' --fuzz-runs 10000",
-    "test:invariant": "forge test --match-path 'test/invariant/**' --fuzz-runs 10000",
+    "clean": "forge clean",
+    "snapshot": "forge snapshot",
+
+    "fmt": "forge fmt",
+    "fmt:check": "forge fmt --check",
     "lint": "solhint 'src/**/*.sol'",
     "lint:fix": "solhint 'src/**/*.sol' --fix",
+
+    "test": "forge test -v",
+    "test:vv": "forge test -vv",
+    "test:vvv": "forge test -vvv",
+    "test:vvvv": "forge test -vvvv",
+
+    "test:unit": "forge test --match-path 'test/unit/**' -vvv",
+    "test:unit:v": "forge test --match-path 'test/unit/**' -v",
+    "test:unit:vv": "forge test --match-path 'test/unit/**' -vv",
+    "test:unit:vvv": "forge test --match-path 'test/unit/**' -vvv",
+
+    "test:fuzz": "forge test --match-path 'test/fuzz/**' --fuzz-runs 10000 -vvv",
+    "test:invariant": "forge test --match-path 'test/invariant/**' --fuzz-runs 10000 --depth 500 -vvv",
+    "test:fork": "forge test --match-path 'test/fork/**' -vvv",
+
     "coverage": "forge coverage --report lcov",
     "slither": "slither . --config-file slither.config.json",
-    "clean": "forge clean",
-    "fmt": "forge fmt",
-    "fmt:check": "forge fmt --check"
+
+    "deploy:local": "ETHERSCAN_API_KEY=dummy forge script script/Deploy.s.sol --rpc-url http://localhost:8545 --broadcast --sender 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 --unlocked -vvvv",
+    "deploy:dry": "ETHERSCAN_API_KEY=dummy forge script script/Deploy.s.sol --rpc-url http://localhost:8545 -vvvv"
   },
   "devDependencies": {
     "solhint": "^5.0.5"
