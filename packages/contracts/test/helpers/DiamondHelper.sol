@@ -14,6 +14,7 @@ import {AssetManagerFacet} from "../../src/facets/token/AssetManagerFacet.sol";
 import {ClaimTopicsFacet} from "../../src/facets/identity/ClaimTopicsFacet.sol";
 import {TrustedIssuerFacet} from "../../src/facets/identity/TrustedIssuerFacet.sol";
 import {IdentityRegistryFacet} from "../../src/facets/identity/IdentityRegistryFacet.sol";
+import {ComplianceRouterFacet} from "../../src/facets/compliance/ComplianceRouterFacet.sol";
 import {IDiamond, IDiamondCut, IDiamondLoupe} from "../../src/interfaces/core/IDiamond.sol";
 import {DiamondInit} from "../../src/initializers/DiamondInit.sol";
 
@@ -31,6 +32,7 @@ contract DiamondHelper is Test {
         ClaimTopicsFacet claimTopicsFacet;
         TrustedIssuerFacet trustedIssuerFacet;
         IdentityRegistryFacet identityRegistryFacet;
+        ComplianceRouterFacet complianceRouterFacet;
     }
 
     function deployDiamond(address owner) internal returns (DeployedDiamond memory d) {
@@ -45,11 +47,12 @@ contract DiamondHelper is Test {
         d.claimTopicsFacet = new ClaimTopicsFacet();
         d.trustedIssuerFacet = new TrustedIssuerFacet();
         d.identityRegistryFacet = new IdentityRegistryFacet();
+        d.complianceRouterFacet = new ComplianceRouterFacet();
         DiamondInit diamondInit = new DiamondInit();
 
         d.diamond = new Diamond(owner, address(d.cutFacet));
 
-        IDiamond.FacetCut[] memory cuts = new IDiamond.FacetCut[](10);
+        IDiamond.FacetCut[] memory cuts = new IDiamond.FacetCut[](11);
 
         cuts[0] = IDiamond.FacetCut({
             facetAddress: address(d.loupeFacet),
@@ -100,6 +103,11 @@ contract DiamondHelper is Test {
             facetAddress: address(d.identityRegistryFacet),
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: _identityRegistrySelectors()
+        });
+        cuts[10] = IDiamond.FacetCut({
+            facetAddress: address(d.complianceRouterFacet),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _complianceRouterSelectors()
         });
 
         vm.prank(owner);
@@ -208,5 +216,14 @@ contract DiamondHelper is Test {
         sels[6] = IdentityRegistryFacet.getIdentity.selector;
         sels[7] = IdentityRegistryFacet.getCountry.selector;
         sels[8] = IdentityRegistryFacet.contains.selector;
+    }
+
+    function _complianceRouterSelectors() internal pure returns (bytes4[] memory sels) {
+        sels = new bytes4[](5);
+        sels[0] = ComplianceRouterFacet.canTransfer.selector;
+        sels[1] = ComplianceRouterFacet.transferred.selector;
+        sels[2] = ComplianceRouterFacet.minted.selector;
+        sels[3] = ComplianceRouterFacet.burned.selector;
+        sels[4] = ComplianceRouterFacet.getComplianceModule.selector;
     }
 }
